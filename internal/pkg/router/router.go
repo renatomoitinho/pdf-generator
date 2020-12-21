@@ -2,6 +2,7 @@ package router
 
 import (
     "github.com/go-chi/chi"
+    "github.com/go-chi/cors"
     "net/http"
     "pdf-generation/internal/pkg/constants"
 
@@ -10,7 +11,12 @@ import (
 
 func Router() (*chi.Mux, error) {
     router := chi.NewRouter()
-
+    router.Use(cors.Handler(cors.Options{
+        AllowedOrigins: []string{"*"},
+        AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+        AllowedHeaders: []string{"*"},
+        AllowCredentials: true,
+    }))
     router.NotFound(NotFoundHandler)
     router.MethodNotAllowed(MethodNotAllowedHandler)
     router.Get("/", IndexHandler)

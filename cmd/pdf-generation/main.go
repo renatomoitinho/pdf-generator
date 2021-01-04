@@ -6,15 +6,15 @@ import (
     "net/http"
     "os"
     "os/signal"
-    "time"
-
     "pdf-generation/internal/pkg/router"
+    "time"
 )
 
 func main() {
+
     basicRouter, err := router.Router()
     if err != nil {
-        log.Fatal(err.Error())
+       log.Fatal(err.Error())
     }
 
     readHeaderTimeout, _ := time.ParseDuration("1000ms")
@@ -30,7 +30,7 @@ func main() {
     signal.Notify(stop, os.Interrupt)
 
     go func() {
-        log.Printf("starting the http server at %s", server.Addr)
+        log.Printf("starting the http server at %s v1 updated", server.Addr)
         if err := server.ListenAndServe(); err != nil {
             if err != http.ErrServerClosed {
                 log.Printf("http ErrServerClosed: %s", err.Error())
